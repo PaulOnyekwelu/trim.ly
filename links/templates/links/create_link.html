@@ -1,0 +1,18 @@
+{% extends "links/_base.html" %} {% block main %}
+
+{% load tailwind_filters %}
+
+<div class="sm:w-2/4 mx-auto mt-10">
+  <form action="{% url "create-link" %}" method="POST">
+    {% csrf_token %}
+    {{form | crispy}}
+    <div>
+      <input
+        type="submit"
+        name="Submit"
+        class="rounded-xl bg-indigo-600 text-white shadow-sm shadow-indigo-200 px-3 py-2"
+      />
+    </div>
+  </form>
+</div>
+{% endblock main %}

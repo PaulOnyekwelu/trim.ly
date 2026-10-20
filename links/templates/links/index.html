@@ -1,0 +1,162 @@
+{% extends "links/_base.html" %} {% load static %} {% block main %}
+<main class="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
+  <section
+    class="mb-9 flex flex-col justify-between gap-5 sm:flex-row sm:items-end"
+  >
+    <div>
+      <p
+        class="mb-2 text-sm font-semibold uppercase tracking-widest text-indigo-600"
+      >
+        Your workspace
+      </p>
+      <h1 class="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+        All links
+      </h1>
+      <p class="mt-2 max-w-xl text-base leading-7 text-slate-500">
+        A simple home for your shortened links and their performance.
+      </p>
+    </div>
+    <div
+      class="inline-flex w-fit items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-2 text-sm text-slate-600 shadow-sm"
+    >
+      <span class="size-2 rounded-full bg-emerald-500"></span>
+      <span
+        ><span class="font-semibold text-slate-900">{{ links|length }}</span>
+        link{{ links|length|pluralize }}</span
+      >
+    </div>
+  </section>
+
+  <section
+    class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+    aria-label="Your links"
+  >
+    <div
+      class="flex items-center justify-between border-b border-slate-200 px-5 py-4 sm:px-6"
+    >
+      <div>
+        <h2 class="font-semibold text-slate-900">Your links</h2>
+        <p class="mt-1 text-sm text-slate-500">
+          Manage and track your destinations
+        </p>
+      </div>
+      <span
+        class="hidden rounded-md bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 sm:inline-flex"
+        >LINK LIBRARY</span
+      >
+    </div>
+
+    {% if links %}
+    <div class="divide-y divide-slate-100">
+      {% for link in links %}
+      <article
+        class="flex flex-col gap-4 px-5 py-5 transition hover:bg-slate-50/70 sm:flex-row sm:items-center sm:justify-between sm:px-6"
+      >
+        <div class="min-w-0">
+          <h3 class="truncate font-semibold text-slate-900">{{ link.name }}</h3>
+          <a
+            href="{{ link.url }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-1 block max-w-xl truncate text-sm text-slate-500 transition hover:text-indigo-600"
+          >
+            {{ link.url }}
+          </a>
+        </div>
+        <div
+          class="flex items-center justify-between gap-4 sm:justify-end sm:gap-8"
+        >
+          <div class="min-w-28">
+            <p
+              class="mb-1 text-xs font-medium uppercase tracking-wide text-slate-400"
+            >
+              Short link
+            </p>
+            <span
+              class="inline-flex items-center gap-1.5 rounded-md bg-indigo-50 px-2.5 py-1.5 font-mono text-sm font-medium text-indigo-700"
+            >
+              <span aria-hidden="true">/</span>{{ link.slug }}
+            </span>
+          </div>
+          <div class="min-w-16 text-right">
+            <p
+              class="mb-1 text-xs font-medium uppercase tracking-wide text-slate-400"
+            >
+              Clicks
+            </p>
+            <p class="font-semibold tabular-nums text-slate-900">
+              {{ link.clicks }}
+            </p>
+          </div>
+          <a
+            href="{% url "root-link" link.slug %}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex size-9 items-center justify-center rounded-lg border border-slate-200 text-slate-500 transition hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            aria-label="Visit destination for {{ link.name }}"
+          >
+            <svg
+              class="size-4"
+              viewBox="0 0 20 20"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M11 4h5v5M16 4l-7 7M14 11v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="flex flex-col items-center px-6 py-16 text-center sm:py-20">
+      <span
+        class="mb-5 flex size-14 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600"
+      >
+        <svg class="size-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="M10 13.5a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1.72 1.72M14 10.5a4 4 0 0 0-5.66 0l-3 3A4 4 0 0 0 11 19.16l1.72-1.72"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+      <h2 class="text-lg font-semibold text-slate-900">
+        Your first link is one click away
+      </h2>
+      <p class="mt-2 max-w-sm text-sm leading-6 text-slate-500">
+        Add a destination to create a short link and start keeping everything
+        organized.
+      </p>
+      <a
+        href="{% url 'admin:links_link_add' %}"
+        class="mt-6 inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+      >
+        <svg class="size-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path
+            d="M10 4v12M4 10h12"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          />
+        </svg>
+        Add your first link
+      </a>
+    </div>
+    {% endif %}
+  </section>
+
+  <p class="mt-6 text-center text-xs text-slate-400">
+    Keep your links short. Keep things moving.
+  </p>
+</main>
+
+{% endblock main %}
