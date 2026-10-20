@@ -2,7 +2,7 @@
 
 {% load tailwind_filters %}
 
-<div class="sm:w-2/4 mx-auto mt-10">
+<div class="sm:w-2/4 mx-auto sm:h-3/4 my-5">
   <form action="{% url "create-link" %}" method="POST">
     {% csrf_token %}
     {{form | crispy}}
